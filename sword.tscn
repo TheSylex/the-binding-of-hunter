@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbgv7tghn2vlr"]
+
+[ext_resource type="Texture2D" uid="uid://bvxxdwfok8362" path="res://sword.png" id="1_guu7v"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5spgk"]
+radius = 2.82843
+height = 33.9411
+
+[node name="Sword" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -4.71239
+shape = SubResource("CapsuleShape2D_5spgk")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+rotation = 0.785398
+texture = ExtResource("1_guu7v")
+metadata/_edit_lock_ = true

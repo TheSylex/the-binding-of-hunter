@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://db1dcp7paw2vv"]
+
+[ext_resource type="Texture2D" uid="uid://cnl327f4fb6fp" path="res://isla.png" id="1_0xxal"]
+
+[node name="World" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.380392, 0.380392, 0.380392, 1)
+texture_filter = 1
+position = Vector2(575.421, 377)
+scale = Vector2(2.48026, 2.48026)
+texture = ExtResource("1_0xxal")
+metadata/_edit_lock_ = true

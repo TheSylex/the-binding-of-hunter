@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://deerrytuxtc8r"]
+
+[ext_resource type="Script" path="res://main_game.gd" id="1_qtfx3"]
+[ext_resource type="PackedScene" uid="uid://db1dcp7paw2vv" path="res://world.tscn" id="2_mtaxe"]
+[ext_resource type="PackedScene" uid="uid://ccoeot618d5rt" path="res://rock.tscn" id="5_xdelr"]
+[ext_resource type="PackedScene" uid="uid://52558okwme3p" path="res://enemy/enemy.tscn" id="6_8isql"]
+[ext_resource type="PackedScene" uid="uid://cbgv7tghn2vlr" path="res://sword.tscn" id="6_b2vf4"]
+[ext_resource type="PackedScene" uid="uid://b0sv872gtgooe" path="res://character/character.tscn" id="6_bafks"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2rgrq"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0k2b1"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_5scpw"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fq1l7"]
+normal = Vector2(0, 1)
+
+[node name="main_game" type="Node2D"]
+script = ExtResource("1_qtfx3")
+
+[node name="World" parent="." instance=ExtResource("2_mtaxe")]
+
+[node name="Character" parent="." instance=ExtResource("6_bafks")]
+
+[node name="Sword" parent="." instance=ExtResource("6_b2vf4")]
+position = Vector2(222, 104)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.25, 1.25)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(581, 753)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_2rgrq")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(1150, 345)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("WorldBoundaryShape2D_0k2b1")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(2, 352)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("WorldBoundaryShape2D_5scpw")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(608, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("WorldBoundaryShape2D_fq1l7")
+metadata/_edit_lock_ = true
+
+[node name="Rock" parent="." instance=ExtResource("5_xdelr")]
+position = Vector2(285, 512)
+
+[node name="Rock2" parent="." instance=ExtResource("5_xdelr")]
+position = Vector2(888, 621)
+
+[node name="Rock3" parent="." instance=ExtResource("5_xdelr")]
+position = Vector2(911, 208)
+
+[node name="Rock4" parent="." instance=ExtResource("5_xdelr")]
+position = Vector2(268, 160)
+
+[node name="Enemy" parent="." instance=ExtResource("6_8isql")]
+position = Vector2(611, 403)

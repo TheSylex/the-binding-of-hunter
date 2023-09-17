@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0sv872gtgooe"]
+
+[ext_resource type="Script" path="res://character/character.gd" id="1_8vcyd"]
+[ext_resource type="Texture2D" uid="uid://dot871ewulo32" path="res://character.png" id="2_u7md6"]
+[ext_resource type="Texture2D" uid="uid://cdxt0rejd811c" path="res://white.png" id="3_2hyy2"]
+[ext_resource type="Script" path="res://StateMachine.gd" id="4_ev2fb"]
+[ext_resource type="Script" path="res://character/states/run.gd" id="5_umpf1"]
+[ext_resource type="Script" path="res://character/states/roll.gd" id="6_gocty"]
+[ext_resource type="Script" path="res://character/states/displace.gd" id="7_qx763"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k2fyv"]
+radius = 12.0
+height = 60.0
+
+[node name="StatefulCharacter" type="Node2D"]
+
+[node name="Character" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 11
+motion_mode = 1
+script = ExtResource("1_8vcyd")
+ACCELERATION = 4000.0
+FRICTION = 0.95
+MAX_SPEED = 200.0
+
+[node name="ProgressBar" type="ProgressBar" parent="Character"]
+offset_left = -12.0
+offset_top = 32.0
+offset_right = 88.0
+offset_bottom = 57.0
+scale = Vector2(0.25, 0.25)
+min_value = 600.0
+max_value = 1400.0
+value = 600.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="Character"]
+offset_left = -25.0
+offset_top = -46.0
+offset_right = 75.0
+offset_bottom = -21.0
+scale = Vector2(0.5, 0.5)
+value = 100.0
+show_percentage = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+shape = SubResource("CapsuleShape2D_k2fyv")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Character"]
+visible = false
+self_modulate = Color(1, 0.768627, 0.768627, 1)
+texture_filter = 1
+texture = ExtResource("2_u7md6")
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="Character"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Character/Area2D"]
+visible = false
+polygon = PackedVector2Array(-10, -20, 300, -70, 300, 70, -10, 20)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2D" type="Polygon2D" parent="Character/Area2D"]
+texture = ExtResource("3_2hyy2")
+polygon = PackedVector2Array(-10, -20, 300, -70, 300, 70, -10, 20)
+uv = PackedVector2Array(1, 1, 0, 1, 0, 0, 1, 0)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+metadata/_edit_lock_ = true
+
+[node name="PowerCD" type="Timer" parent="Character"]
+wait_time = 2.0
+one_shot = true
+
+[node name="SelectionLine" type="Node2D" parent="Character"]
+
+[node name="DisplacementCD" type="Timer" parent="Character"]
+one_shot = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_ev2fb")
+initial_state = NodePath("run")
+
+[node name="run" type="Node" parent="StateMachine"]
+script = ExtResource("5_umpf1")
+
+[node name="roll" type="Node" parent="StateMachine"]
+script = ExtResource("6_gocty")
+
+[node name="displace" type="Node" parent="StateMachine"]
+script = ExtResource("7_qx763")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="RollCD" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="RollDuration" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true

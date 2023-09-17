@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://52558okwme3p"]
+
+[ext_resource type="Script" path="res://enemy/enemy.gd" id="1_krq6g"]
+[ext_resource type="Script" path="res://StateMachine.gd" id="2_pynj5"]
+[ext_resource type="Script" path="res://enemy/states/attack/attack1.gd" id="2_wx2rr"]
+[ext_resource type="Script" path="res://enemy/states/move/idle.gd" id="4_ur5q3"]
+[ext_resource type="Script" path="res://enemy/states/attack/attack2.gd" id="4_x33lg"]
+[ext_resource type="Script" path="res://enemy/states/move/attack.gd" id="5_0or6v"]
+[ext_resource type="Script" path="res://enemy/states/attack/attack3.gd" id="5_q2dno"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u23b0"]
+radius = 79.0
+height = 248.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dg55d"]
+radius = 79.7621
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cmgs6"]
+radius = 3429.25
+
+[node name="Enemy" type="Node2D"]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_krq6g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("CapsuleShape2D_u23b0")
+
+[node name="HealthBar" type="ProgressBar" parent="AnimatableBody2D"]
+offset_left = -87.0
+offset_top = -138.0
+offset_right = 13.0
+offset_bottom = -133.0
+scale = Vector2(1.75, 1.75)
+value = 100.0
+show_percentage = false
+
+[node name="AttackSM" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_pynj5")
+initial_state = NodePath("attack1")
+
+[node name="attack1" type="Node" parent="AttackSM"]
+script = ExtResource("2_wx2rr")
+
+[node name="attack2" type="Node" parent="AttackSM"]
+script = ExtResource("4_x33lg")
+
+[node name="attack3" type="Node" parent="AttackSM"]
+script = ExtResource("5_q2dno")
+
+[node name="MovementSM" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_pynj5")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="MovementSM"]
+script = ExtResource("4_ur5q3")
+
+[node name="attack" type="Node" parent="MovementSM"]
+script = ExtResource("5_0or6v")
+
+[node name="IdlingTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="IdlingTimer2" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="SafeArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SafeArea"]
+shape = SubResource("CircleShape2D_dg55d")
+debug_color = Color(0.313726, 0.627451, 0, 0.419608)
+
+[node name="DamageArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("CircleShape2D_cmgs6")
+debug_color = Color(0.992157, 0, 0.278431, 0.419608)

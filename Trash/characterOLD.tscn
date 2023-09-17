@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc3x3c1rlq1b1"]
+
+[ext_resource type="Script" path="res://character/character.gd" id="1_vmtyj"]
+[ext_resource type="Texture2D" uid="uid://dot871ewulo32" path="res://character.png" id="2_ownus"]
+[ext_resource type="Texture2D" uid="uid://cdxt0rejd811c" path="res://white.png" id="3_8ws8g"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k2fyv"]
+radius = 12.0
+height = 60.0
+
+[node name="Character" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_vmtyj")
+ACCELERATION = 4000.0
+FRICTION = 0.95
+MAX_SPEED = 200.0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -25.0
+offset_top = -46.0
+offset_right = 75.0
+offset_bottom = -21.0
+scale = Vector2(0.5, 0.5)
+min_value = 600.0
+max_value = 1400.0
+value = 600.0
+show_percentage = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_k2fyv")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 0.768627, 0.768627, 1)
+texture_filter = 1
+texture = ExtResource("2_ownus")
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+visible = false
+polygon = PackedVector2Array(-10, -20, 300, -70, 300, 70, -10, 20)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+texture = ExtResource("3_8ws8g")
+polygon = PackedVector2Array(-10, -20, 300, -70, 300, 70, -10, 20)
+uv = PackedVector2Array(1, 1, 0, 1, 0, 0, 1, 0)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+metadata/_edit_lock_ = true
+
+[node name="PowerCD" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="RollDuration" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="RollCD" type="Timer" parent="."]
+one_shot = true
+
+[node name="SelectionLine" type="Node2D" parent="."]
+
+[node name="DisplacementCD" type="Timer" parent="."]
+one_shot = true
